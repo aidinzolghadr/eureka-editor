@@ -551,7 +551,10 @@ static bool parseArg(const char *text, SpecialArg &arg)
     if(!pos)
     {
         arg.name = text;
-        arg.type = SpecialArgType::generic;
+		if(arg.name.good() && arg.name.back() == '?')
+			arg.type = SpecialArgType::boolean;
+		else
+			arg.type = SpecialArgType::generic;
         return true;
     }
     const char *type = pos + 1;
@@ -578,9 +581,25 @@ static bool parseArg(const char *text, SpecialArg &arg)
         arg.type = SpecialArgType::tid;
     else if(!strncmp(type, "po", typeLength))
         arg.type = SpecialArgType::po;
-    else    // error
-        return false;
+    else
+	{
+        arg.type = SpecialArgType::custom;
+		arg.customTypeName = type;
+	}
     return true;
+}
+
+static void addArgTypeEntry(parser_state_c *pst, const char **argv, int nargs, ConfigData &config,
+	std::vector<ArgType::Entry> ArgType::*field)
+{
+	if(nargs != 3 && nargs != 2)
+		pst->fail(bad_arg_count_fail, argv[0], 3);
+	ArgType::Entry entry = {};
+	entry.number = atoi(argv[2]);
+	entry.name = nargs == 3 ? argv[3] : argv[2];
+	SString name = SString(argv[1]).asLower();
+	ArgType &type = config.argument_types[name];
+	(type.*field).push_back(entry);
 }
 
 static void M_ParseNormalLine(parser_state_c *pst, ConfigData &config)
@@ -696,6 +715,14 @@ static void M_ParseNormalLine(parser_state_c *pst, ConfigData &config)
 		}
 		else
 			config.line_types[number] = info;
+	}
+	else if(y_stricmp(argv[0], "argtype") == 0)
+	{
+		addArgTypeEntry(pst, argv, nargs, config, &ArgType::options);
+	}
+	else if(y_stricmp(argv[0], "argflag") == 0)
+	{
+		addArgTypeEntry(pst, argv, nargs, config, &ArgType::flags);
 	}
 	else if(y_stricmp(argv[0], "specialhandling") == 0)
 	{

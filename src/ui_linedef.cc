@@ -179,7 +179,7 @@ UI_LineBox::UI_LineBox(Instance &inst, int X, int Y, int W, int H, const char *l
 	length->callback(length_callback, this);
 	length->when(FL_WHEN_RELEASE | FL_WHEN_ENTER_KEY);
 
-	argsBox = new UI_ArgsBox(which->x(), Y);
+	argsBox = new UI_ArgsBox(which->x(), Y, mFixUp, inst.level);
 	argsBox->setCallbackFunction(std::bind_front(&UI_LineBox::argsCallback, this));
 	argsBox->hide();
 
@@ -221,7 +221,7 @@ UI_LineBox::UI_LineBox(Instance &inst, int X, int Y, int W, int H, const char *l
 	Y += back->h();
 
 	mFixUp.loadFields({type, length, tag});
-	argsBox->loadFields(mFixUp);
+	argsBox->loadToFixUp();
 
 	end();
 

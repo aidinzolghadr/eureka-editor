@@ -72,7 +72,10 @@ enum class SpecialArgType
     self_line_id,
     self_line_id_hi,
     tid,
-    po
+    po,
+	custom,
+
+	boolean,
 };
 
 //
@@ -87,6 +90,7 @@ struct SpecialArg
 
     SString name;
     SpecialArgType type = SpecialArgType::generic;
+	SString customTypeName;
 	unsigned flags;
 };
 
@@ -433,6 +437,23 @@ public:
 	}
 };
 
+struct ArgType
+{
+	struct Entry
+	{
+		int number;
+		SString name;
+	};
+
+	bool empty() const
+	{
+		return options.empty() && flags.empty();
+	}
+
+	std::vector<Entry> options;
+	std::vector<Entry> flags;
+};
+
 //
 // Target for M_ParseDefinitionFile
 //
@@ -457,6 +478,7 @@ struct ConfigData
 	std::vector<thingflag_t> thing_flags;
 	std::vector<lineflag_t> line_flags; // New: linedef UI flags
 	std::vector<gensector_t> gen_sectors; // generalized sector types
+	std::map<SString, ArgType> argument_types;
 
 	int num_gen_linetypes = 0;
 	generalized_linetype_t gen_linetypes[MAX_GEN_NUM_TYPES] = {}; // BOOM Generalized Lines

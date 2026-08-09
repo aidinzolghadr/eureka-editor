@@ -1,0 +1,131 @@
+#------------------------------------------------------------------------
+#  PARAMETERIZED TYPE ARGUMENTS
+#------------------------------------------------------------------------
+#
+#  Eureka DOOM Editor
+#
+#  Copyright (C) 2026 Ioan Chera
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation; either version 2
+#  of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#------------------------------------------------------------------------
+
+# Common types, based on generalized choices. Available to Hexen.
+
+argtype speed 2 slowest
+argtype speed 4 slower
+argtype speed 8 slow
+argtype speed 16 medium
+argtype speed 32 fast
+argtype speed 64 turbo
+argtype speed 128 blazing
+
+argtype delay 35 "1 second"
+argtype delay 105 "Doom lift"
+argtype delay 150 "Doom door"
+argtype delay 175 "5 seconds"
+argtype delay 300 "2x Doom door"
+argtype delay 350 "10 seconds"
+argtype delay 1050 "30 seconds"
+
+argtype stepsize 4
+argtype stepsize 8
+argtype stepsize 16
+argtype stepsize 24
+
+# More specific types
+
+argtype lightning 0 start
+argtype lightning 1 one-shot
+argtype lightning 2 stop
+
+# Cross-port definitions
+
+argtype crush_mode 0 compatible
+argtype crush_mode 1 Doom
+argtype crush_mode 2 Hexen
+argtype crush_mode 3 Doom+slow
+
+argtype stop_mode 0 compatible
+argtype stop_mode 1 stasis
+argtype stop_mode 2 clear
+
+argtype octics 8 "1 second"
+argtype octics 24 "Doom lift"
+argtype octics 35 "Doom door"
+argtype octics 40 "5 seconds"
+argtype octics 69 "2x Doom door"
+argtype octics 80 "10 seconds"
+argtype octics 240 "30 seconds"
+
+argtype plat_lockout 0 compatible
+argtype plat_lockout 1 correct
+argtype plat_lockout 2 bugged
+
+argtype boom_emu 0 no
+argtype boom_emu 1998 emulate
+
+argflag slope_share 1 "front to back floor"
+argflag slope_share 2 "back to front floor"
+argflag slope_share 4 "front to back ceiling"
+argflag slope_share 8 "back to front ceiling"
+
+argtype tele_nofog 0 "Keep direction"
+argtype tele_nofog 1 "Set direction"
+argtype tele_nofog 2 "Relative (glitchy)"
+argtype tele_nofog 3 "Relative (fixed)"
+
+argflag scroll_model_flag 1 displace
+argflag scroll_model_flag 2 accelerate
+argflag scroll_floor_flag 1 displace
+argflag scroll_floor_flag 2 accelerate
+argflag scroll_floor_flag 4 "use line vector"
+argtype scroll_floor_push 0 texture
+argtype scroll_floor_push 1 actors
+argtype scroll_floor_push 2 both
+
+argtype generic_floor 0 "by dist"
+argtype generic_floor 1 "Highest Floor"
+argtype generic_floor 2 "Lowest Floor"
+argtype generic_floor 3 "Next Floor"
+argtype generic_floor 4 "Lowest CEIL"
+argtype generic_floor 5 "CEILING"
+argtype generic_floor 6 "By texture"
+argtype generic_floor_flag 0 "NONE"
+argtype generic_floor_flag 1 "Tex+zero"
+argtype generic_floor_flag 2 "Texture"
+argtype generic_floor_flag 3 "Tex+type"
+argflag generic_floor_flag 4 "Numeric"
+argflag generic_floor_flag 8 "UP"
+argflag generic_floor_flag 16 "CRUSH"
+argtype generic_ceiling 0 "by dist"
+argtype generic_ceiling 1 "Highest Ceil"
+argtype generic_ceiling 2 "Lowest Ceil"
+argtype generic_ceiling 3 "Next Ceil"
+argtype generic_ceiling 4 "Highest Floor"
+argtype generic_ceiling 5 "FLOOR"
+argtype generic_ceiling 6 "By texture"
+argtype generic_lift 0 "up by value"
+argtype generic_lift 1 "Lowest Floor"
+argtype generic_lift 2 "Next Floor"
+argtype generic_lift 3 "Lowest CEIL"
+argtype generic_lift 4 "PERPETUAL"
+argflag generic_stairs 1 "build up"
+argflag generic_stairs 2 "ignore textures"
+
+special 1 p "Polyobj_StartLine"       :po  mirror:po  sound_seq
+special 2 p "Polyobj_RotateLeft"      :po  :speed  angle
+special 3 p "Polyobj_RotateRight"     :po  :speed  angle
+special 4 p "Polyobj_Move"            :po  :speed  angle  dist
+special 5 p "Polyobj_ExplicitLine"    :po  order  mirror:po  sound_seq
+special 6 p "Polyobj_MoveTimes8"      :po  :speed  angle  dist
+special 7 p "Polyobj_DoorSwing"       :po  speed  angle  delay
+special 8 p "Polyobj_DoorSlide"       :po  :speed  angle  dist  :delay

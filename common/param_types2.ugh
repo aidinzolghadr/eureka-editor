@@ -1,0 +1,117 @@
+# Common to Eternity and UZDoom
+
+include param_types
+
+special   9 r "Line_Horizon"
+special  10 d "Door_Close"            :tag  :speed  light_tag:tag
+special  11 d "Door_Open"             :tag  :speed  light_tag:tag
+special  12 d "Door_Raise"            :tag  :speed  :delay  light_tag:tag
+special  13 d "Door_LockedRaise"      :tag  :speed  :delay  lock  light_tag:tag
+special  17 t "Thing_Raise"            :tid
+special  19 t "Thing_Stop"             :tid
+special  29 e "Pillar_Build"               :tag  :speed  dist
+special  30 e "Pillar_Open"                :tag  :speed  floor_dist  ceil_dist
+special  38 c "Ceiling_Waggle"               :tag  amp  speed  offset  time
+special  42 c "Ceiling_CrushAndRaise"        :tag  :speed  damage  :crush_mode
+special  43 c "Ceiling_LowerAndCrush"        :tag  :speed  damage  :crush_mode
+special  44 c "Ceiling_CrushStop"            :tag :stop_mode
+special  45 c "Ceiling_CrushRaiseAndStay"    :tag  :speed  damage  :crush_mode
+special  46 f "Floor_CrushStop"            :tag
+special  48 - "Sector_Attach3dMidtex"  :line_id  :tag  ceiling?
+special  54 s "Sector_ChangeFlags"         :tag  set_flags:sector_flag  clear_flags:sector_flag
+special  59 p "Polyobj_OR_MoveToSpot"   :po  :speed  :tid
+special  60 g "Plat_PerpetualRaise"          :tag  :speed  :delay
+special  62 g "Plat_DownWaitUpStay"          :tag  :speed  :delay
+special  63 g "Plat_DownByValue"             :tag  :speed  :delay  dist_x8
+special  64 g "Plat_UpWaitDownStay"          :tag  :speed  :delay
+special  65 g "Plat_UpByValue"               :tag  :speed  :delay  dist_x8
+special  71 u "Teleport_NoFog"         :tid  set_angle:tele_nofog  :tag keep_height?
+special  72 t "ThrustThing"             angle  thrust  unlimited? :tid
+special  73 t "DamageThing"             damage  death_type
+special  75 x "Teleport_EndGame"
+special  80 k "ACS_Execute"             script  map  param1  param2  param3
+special  81 k "ACS_Suspend"             script  map
+special  82 k "ACS_Terminate"           script  map
+special  83 k "ACS_LockedExecute"       script  map  param1  param2  lock
+special  84 k "ACS_ExecuteWithResult"   script  param1  param2  param3  param4
+special  85 k "ACS_LockedExecuteDoor"   script  map  param1  param2  lock
+special  86 p "Polyobj_MoveToSpot"      :po  :speed  :tid
+special  87 p "Polyobj_Stop"            :po
+special  88 p "Polyobj_MoveTo"         :po  speed x y
+special  89 p "Polyobj_OR_MoveTo"      :po  speed x y
+special  90 p "Polyobj_OR_RotateLeft"   :po  :speed  angle
+special  91 p "Polyobj_OR_RotateRight"  :po  :speed  angle
+special  92 p "Polyobj_OR_Move"         :po  :speed  angle  dist
+special  93 p "Polyobj_OR_MoveTimes8"   :po  :speed  angle  dist_x8
+special  95 e "FloorAndCeiling_LowerByValue" :tag  :speed  dist
+special  96 e "FloorAndCeiling_RaiseByValue" :tag  :speed  dist
+special  97 c "Ceiling_LowerAndCrushDist"    :tag  :speed  damage  gap  :crush_mode
+special 104 c "Ceiling_CrushAndRaiseSilentDist" :tag  gap  :speed  damage  :crush_mode
+special 105 d "Door_WaitRaise"        :tag  :speed  :delay  wait:delay  light_tag:tag
+special 106 d "Door_WaitClose"        :tag  :speed  wait:delay  light_tag:tag
+special 110 l "Light_RaiseByValue"     :tag  light
+special 111 l "Light_LowerByValue"     :tag  light
+special 112 l "Light_ChangeToValue"    :tag  light
+special 113 l "Light_Fade"             :tag  light  time
+special 114 l "Light_Glow"             :tag  high  low  time
+special 115 l "Light_Flicker"          :tag  high  low
+special 116 l "Light_Strobe"           :tag  high  low  high_time  low_time
+special 118 s "Plane_Copy"                 front_floor_tag:tag  front_ceil_tag:tag  back_floor_tag:tag  back_ceil_tag:tag  share_flags:slope_share
+special 119 t "Thing_Damage"            :tid  damage  damage_type
+special 120 - "Radius_Quake"              intensity  duration  damrad  tremrad  :tid
+special 128 t "ThrustThingZ"            :tid  thrust  down?  additive?
+special 130 t "Thing_Activate"          :tid
+special 131 t "Thing_Deactivate"        :tid
+special 132 t "Thing_Remove"            :tid
+special 133 t "Thing_Destroy"           :tid  extreme?  :tag
+special 134 t "Thing_Projectile"       :tid  type_id  angle  speed  up_speed
+special 135 t "Thing_Spawn"             :tid  type_id  angle  new_id
+special 136 t "Thing_ProjectileGravity" :tid  type_id  angle  speed  up_speed
+special 137 t "Thing_SpawnNoFog"        :tid  type_id  angle  new_id
+special 138 f "Floor_Waggle"               :tag  amp  speed  offset  time
+special 140 s "Sector_ChangeSound"         :tag  sound_seq
+special 168 c "Ceiling_CrushAndRaiseDist"    :tag  gap  :speed  damage  :crush_mode
+special 176 t "Thing_ChangeTID"         :tid  new_tid
+special 179 - "ChangeSkill"             skill
+special 185 s "Sector_SetRotation"         :tag  floor_angle  ceil_angle
+special 186 s "Sector_SetCeilingPanning"   :tag  x_offset  x_frac  y_offset  y_frac
+special 187 s "Sector_SetFloorPanning"     :tag  x_offset  x_frac  y_offset  y_frac
+special 195 c "Ceiling_CrushRaiseAndStayA"   :tag  down_speed:speed  up_speed:speed  damage  :crush_mode
+special 196 c "Ceiling_CrushAndRaiseA"       :tag  down_speed:speed  up_speed:speed  damage  :crush_mode
+special 197 c "Ceiling_CrushAndRaiseSilentA" :tag  down_speed:speed  up_speed:speed  damage  :crush_mode
+special 200 f "Generic_Floor"       :tag  :speed  dist  target_type:generic_floor  flags:generic_floor_flag
+special 201 c "Generic_Ceiling"     :tag  :speed  dist  target_type:generic_ceiling  flags:generic_floor_flag
+special 203 g "Generic_Lift"        :tag  :speed  delay_octics:octics  lift_type:generic_lift  type0_height_x8
+special 204 q "Generic_Stairs"      :tag  :speed  height  flags:generic_stairs  reset_delay:delay
+special 205 c "Generic_Crusher"     :tag  down_speed:speed  up_speed:speed  silent?   damage
+special 207 g "Plat_PerpetualRaiseLip"       :tag  :speed  :delay  lip
+special 210 r "Transfer_FloorLight"     :tag
+special 211 r "Transfer_CeilingLight"   :tag
+special 217 q "Stairs_BuildUpDoom"         :tag  :speed  height:stepsize  delay  reset_delay:delay
+special 219 s "Sector_SetFriction"         :tag  friction
+special 222 a "Scroll_Texture_Model"   :line_id  flags:scroll_model_flag
+special 223 a "Scroll_Floor"            :tag  kind:scroll_floor_flag  push:scroll_floor_push  x_speed+128  y_speed+128
+special 224 a "Scroll_Ceiling"          :tag  kind:scroll_floor_flag  -  x_speed+128  y_speed+128
+special 226 k "ACS_ExecuteAlways"       script  map  param1  param2  param3
+special 227 s "PointPush_SetForce"         :tag  :tid  force  use_line_angle?
+special 228 g "Plat_RaiseAndStayTx0"         :tag  :speed  lock_out:plat_lockout
+special 230 g "Plat_UpByValueStayTx"         :tag  :speed  dist_x8
+special 231 g "Plat_ToggleCeiling"           :tag
+special 232 l "Light_StrobeDoom"       :tag  high_time  low_time
+special 233 l "Light_MinNeighbor"      :tag
+special 234 l "Light_MaxNeighbor"      :tag
+special 235 f "Floor_TransferTrigger"      :tag
+special 236 f "Floor_TransferNumeric"      :tag
+special 242 f "Floor_LowerToHighest"       :tag  :speed  lip+128  force_adjust?
+special 245 e "Elevator_RaiseToNearest"    :tag  :speed
+special 246 e "Elevator_MoveToFloor"       :tag  :speed
+special 247 e "Elevator_LowerToNearest"    :tag  :speed
+special 248 t "HealThing"               amount  max_health
+special 249 d "Door_CloseWaitOpen"    :tag  :speed  delay:octics  light_tag:tag
+special 250 f "Floor_Donut"                :tag  pillar_speed:speed  pool_speed:speed
+special 251 e "FloorAndCeiling_LowerRaise" :tag  floor_speed:speed  ceil_speed:speed :boom_emu
+special 255 c "Ceiling_CrushRaiseAndStaySilA"  :tag  down_speed:speed  up_speed:speed  damage  :crush_mode
+special 270 q "Stairs_BuildDownDoom"       :tag  :speed  height:stepsize  delay reset_delay:delay
+special 271 q "Stairs_BuildUpDoomSync"     :tag  :speed  height:stepsize  reset_delay:delay
+special 272 q "Stairs_BuildDownDoomSync"   :tag  :speed  height:stepsize  reset_delay:delay
+special 273 q "Stairs_BuildUpDoomCrush"    :tag  :speed  height:stepsize  delay reset_delay:delay

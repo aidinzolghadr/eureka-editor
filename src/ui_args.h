@@ -21,27 +21,81 @@
 #ifndef __EUREKA_UI_ARGS_H__
 #define __EUREKA_UI_ARGS_H__
 
+#include "m_game.h"
 #include "m_strings.h"
+#include "ui_misc.h"
 
 #include "FL/Fl_Flex.H"
+#include "FL/Fl_Group.H"
 
 #include <functional>
+#include <vector>
 
+class Fl_Menu_Button;
 class LineDef;
 class PanelFieldFixUp;
-class UI_DynIntInput;
 struct ConfigData;
+struct Document;
 struct Thing;
+
+class UI_ArgField : public Fl_Group
+{
+public:
+	UI_ArgField(int X, int Y, int W, int H, PanelFieldFixUp &fixUp);
+	void resize(int X, int Y, int W, int H) override;
+
+	void loadToFixUp();
+	void textcolor(Fl_Color n);
+	void setInputValue(const char *value);
+
+	void setAsTag(const Document &doc);
+	void setAsBoolean();
+	void setAsGeneric();
+	void setAsCustom(const ArgType &type);
+
+	int value() const;
+	void updateFlags();
+
+private:
+	class Input : public UI_DynIntInput
+	{
+	public:
+		Input(int X, int Y, int W, int H) : UI_DynIntInput(X, Y, W, H)
+		{
+		}
+
+		int handle(int event) override;
+
+		void setButton(Fl_Menu_Button *button)
+		{
+			this->button = button;
+		}
+
+	private:
+		Fl_Menu_Button *button;
+	};
+
+	static void optionCallback(Fl_Widget *widget, void *context);
+	void updateOptions();
+
+	PanelFieldFixUp &fixUp;
+
+	Input *input;
+	Fl_Menu_Button *button;
+	std::vector<Fl_Menu_Item> buttonItems;
+
+	ArgType argType;
+};
 
 class UI_ArgsBox : public Fl_Flex
 {
 public:
 	using Callback = std::function<void(int index, int value)>;
 
-	UI_ArgsBox(int X, int Y);
+	UI_ArgsBox(int X, int Y, PanelFieldFixUp &fixUp, const Document &doc);
 	~UI_ArgsBox();
 
-	void loadFields(PanelFieldFixUp &fixUp) const;
+	void loadToFixUp() const;
 
 	void trackLabels();
 	void clear(PanelFieldFixUp &fixUp);
@@ -56,13 +110,16 @@ public:
 
 private:
 	static void argsCallback(Fl_Widget *widget, void *context);
-	void setLabel(int index, const SString &text);
+	void setLabel(int index, const SString &text, SpecialArgType type, const SString &customName,
+		const ConfigData &config);
 
-	UI_DynIntInput *args[5];
+	UI_ArgField *args[5];
 
 	SString argLabels[5];
 
 	Callback callbackFunction;
+
+	const Document &doc;
 };
 
 #endif

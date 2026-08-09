@@ -247,11 +247,11 @@ UI_ThingBox::UI_ThingBox(Instance &inst, int X, int Y, int W, int H, const char 
 
 	Y = Y + spec_desc->h() + 2;
 
-	argsBox = new UI_ArgsBox(which->x(), Y);
+	argsBox = new UI_ArgsBox(which->x(), Y, mFixUp, inst.level);
 	argsBox->setCallbackFunction(std::bind_front(&UI_ThingBox::argsCallback, this));
 
 	mFixUp.loadFields({type, angle, flagBox, tid, exfloor, pos_x, pos_y, pos_z, spec_type});
-	argsBox->loadFields(mFixUp);
+	argsBox->loadToFixUp();
 
 	end();
 

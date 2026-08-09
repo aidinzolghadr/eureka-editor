@@ -505,7 +505,6 @@ special  58 a "Sector_CopyScroller"    :tag  flags:scroll_copy
 # PolyObjects
 special   1 p "Polyobj_StartLine"      :po  mirror_po:po  sound_seq     line_id:self_line_id
 special   5 p "Polyobj_ExplicitLine"   :po  render_order  mirror_po:po  sound_seq line_id:self_line_id
-special   2 p "Polyobj_RotateLeft"     :po  speed  angle
 special 283 p "Polyobj_StopSound"      :po
 
 # Exits

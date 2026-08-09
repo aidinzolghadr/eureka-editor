@@ -478,9 +478,6 @@ special 100 a "Scroll_Texture_Left"     speed
 special 101 a "Scroll_Texture_Right"    speed
 special 225 a "Scroll_Texture_Offsets"  - :line_id kind:scroll_model_flag divisor
 
-# PolyObjects
-special   2 p "Polyobj_RotateLeft"      :po  :speed  angle
-
 # Exits
 special 243 x "Exit_Normal"
 special 244 x "Exit_Secret"

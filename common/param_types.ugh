@@ -127,5 +127,5 @@ special 3 p "Polyobj_RotateRight"     :po  :speed  angle
 special 4 p "Polyobj_Move"            :po  :speed  angle  dist
 special 5 p "Polyobj_ExplicitLine"    :po  order  mirror:po  sound_seq
 special 6 p "Polyobj_MoveTimes8"      :po  :speed  angle  dist
-special 7 p "Polyobj_DoorSwing"       :po  speed  angle  delay
+special 7 p "Polyobj_DoorSwing"       :po  :speed  angle  delay
 special 8 p "Polyobj_DoorSlide"       :po  :speed  angle  dist  :delay

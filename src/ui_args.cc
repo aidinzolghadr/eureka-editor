@@ -39,7 +39,7 @@ enum
 	ARG_DEFAULT_LABEL_SIZE = 12,
 	ARG_SHRUNKEN_LABEL_SIZE = 10,
 
-	DROP_DOWN_BUTTON_WIDTH = 3 * TYPE_INPUT_HEIGHT / 4,
+	DROP_DOWN_BUTTON_WIDTH = 5 * TYPE_INPUT_HEIGHT / 6,
 };
 
 UI_ArgField::UI_ArgField(int X, int Y, int W, int H, PanelFieldFixUp &fixUp) : Fl_Group(X, Y, W, H), fixUp(fixUp)

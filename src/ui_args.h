@@ -50,6 +50,7 @@ public:
 	void setInputValue(const char *value);
 
 	void setAsTag(const Document &doc);
+	void setAsPolyobject(const Document &doc, const ConfigData &config);
 	void setAsBoolean();
 	void setAsGeneric();
 	void setAsCustom(const ArgType &type);
@@ -78,6 +79,7 @@ private:
 
 	static void optionCallback(Fl_Widget *widget, void *context);
 	void updateOptions();
+	void makeTagList(const std::set<int> &tags);
 
 	PanelFieldFixUp &fixUp;
 

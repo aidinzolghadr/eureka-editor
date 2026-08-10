@@ -21,6 +21,7 @@
 #include "ui_args.h"
 
 #include "Document.h"
+#include "lib_util.h"
 #include "LineDef.h"
 #include "m_game.h"
 #include "sys_macro.h"
@@ -39,7 +40,7 @@ enum
 	ARG_DEFAULT_LABEL_SIZE = 12,
 	ARG_SHRUNKEN_LABEL_SIZE = 10,
 
-	DROP_DOWN_BUTTON_WIDTH = 5 * TYPE_INPUT_HEIGHT / 6,
+	DROP_DOWN_BUTTON_WIDTH = 20,
 };
 
 class ArgMenuButton : public Fl_Menu_Button
@@ -182,6 +183,16 @@ void UI_ArgField::updateOptions()
 	button->menu(buttonItems.data());
 }
 
+void UI_ArgField::makeTagList(const std::set<int> &tags)
+{
+	argType.options.clear();
+	argType.flags.clear();
+	argType.options.reserve(tags.size());
+	for(int tag : tags)
+		argType.options.push_back({.number = tag, .name = SString(tag)});
+	updateOptions();
+}
+
 void UI_ArgField::loadToFixUp()
 {
 	fixUp.loadField(input);
@@ -202,11 +213,20 @@ void UI_ArgField::setAsTag(const Document &doc)
 	std::set<int> tags;
 	for(const auto &sector : doc.sectors)
 		tags.insert(sector->tag);
-	argType.options.clear();
-	argType.flags.clear();
-	for(int tag : tags)
-		argType.options.push_back({.number = tag, .name = SString(tag)});
-	updateOptions();
+	makeTagList(tags);
+}
+
+void UI_ArgField::setAsPolyobject(const Document &doc, const ConfigData &config)
+{
+	std::set<int> polyobjects;
+	for(const auto &thing : doc.things)
+	{
+		const thingtype_t *type = get(config.thing_types, thing->type);
+		if(!type || !(type->flags & THINGDEF_POLYSPOT))
+			continue;
+		polyobjects.insert(thing->angle);
+	}
+	makeTagList(polyobjects);
 }
 
 void UI_ArgField::setAsBoolean()
@@ -459,6 +479,9 @@ void UI_ArgsBox::setLabel(int index, const SString &text, SpecialArgType type,
 	{
 		case SpecialArgType::tag:
 			input->setAsTag(doc);
+			break;
+		case SpecialArgType::po:
+			input->setAsPolyobject(doc, config);
 			break;
 		case SpecialArgType::boolean:
 			input->setAsBoolean();

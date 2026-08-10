@@ -73,9 +73,9 @@ enum class SpecialArgType
     self_line_id_hi,
     tid,
     po,
-	custom,
 
 	boolean,
+	custom,
 };
 
 //

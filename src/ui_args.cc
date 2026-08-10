@@ -42,6 +42,72 @@ enum
 	DROP_DOWN_BUTTON_WIDTH = 5 * TYPE_INPUT_HEIGHT / 6,
 };
 
+class ArgMenuButton : public Fl_Menu_Button
+{
+public:
+	int handle(int event) override;
+	ArgMenuButton(const Fl_Group &parent, int X, int Y, int W, int H, const char *l = 0) :
+	Fl_Menu_Button(X, Y, W, H, l), parent(parent)
+	{
+	}
+	const Fl_Menu_Item* popup();	// replace non-virtual method
+
+private:
+	const Fl_Group &parent;
+};
+
+// Same as Fl_Menu_Button's handle, but with adjusted popup position
+int ArgMenuButton::handle(int event)
+{
+	if(!menu() || !menu()->text)
+		return 0;
+	switch(event)
+	{
+		// These events need to use custom popup stuff
+		case FL_PUSH:
+			if (!box()) {
+			  if (Fl::event_button() != 3) return 0;
+			} else if (type()) {
+			  if (!(type() & (1 << (Fl::event_button()-1)))) return 0;
+			}
+			if (Fl::visible_focus()) Fl::focus(this);
+			popup();
+			return 1;
+		case FL_KEYBOARD:
+		  if (!box()) return 0;
+		  if (Fl::event_key() == ' ' &&
+			  !(Fl::event_state() & (FL_SHIFT | FL_CTRL | FL_ALT | FL_META))) {
+			  popup();
+			return 1;
+		  } else return 0;
+		case FL_SHORTCUT:
+		  if (Fl_Widget::test_shortcut()) {popup(); return 1;}
+		  return test_shortcut() != 0;
+		default:
+			return Fl_Menu_Button::handle(event);
+	}
+}
+
+const Fl_Menu_Item* ArgMenuButton::popup() {
+  menu_end();
+  const Fl_Menu_Item* m;
+  pressed_menu_button_ = this;
+  redraw();
+  Fl_Widget_Tracker mb(this);
+  if (!box() || type()) {
+	m = menu()->popup(Fl::event_x(), Fl::event_y(), label(), mvalue(), this);
+  } else {
+//	Fl_Window_Driver::current_menu_button = this;
+	m = menu()->pulldown(parent.x(), parent.y(), parent.w(), parent.h(), 0, this);
+//	Fl_Window_Driver::current_menu_button = NULL;
+  }
+  picked(m);
+  pressed_menu_button_ = 0;
+  if (mb.exists()) redraw();
+  return m;
+}
+
+
 UI_ArgField::UI_ArgField(int X, int Y, int W, int H, PanelFieldFixUp &fixUp) : Fl_Group(X, Y, W, H), fixUp(fixUp)
 {
 	input = new Input(X, Y, W, H);
@@ -52,7 +118,7 @@ UI_ArgField::UI_ArgField(int X, int Y, int W, int H, PanelFieldFixUp &fixUp) : F
 	}, this);
 	input->when(FL_WHEN_RELEASE | FL_WHEN_ENTER_KEY);
 
-	button = new Fl_Menu_Button(X + W - DROP_DOWN_BUTTON_WIDTH, Y, DROP_DOWN_BUTTON_WIDTH, H);
+	button = new ArgMenuButton(*this, X + W - DROP_DOWN_BUTTON_WIDTH, Y, DROP_DOWN_BUTTON_WIDTH, H);
 	button->hide();
 
 	end();

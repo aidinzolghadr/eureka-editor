@@ -27,11 +27,12 @@
 
 #include "FL/Fl_Flex.H"
 #include "FL/Fl_Group.H"
+#include "FL/Fl_Menu_Button.H"
 
 #include <functional>
 #include <vector>
 
-class Fl_Menu_Button;
+class ArgMenuButton;
 class LineDef;
 class PanelFieldFixUp;
 struct ConfigData;
@@ -66,13 +67,13 @@ private:
 
 		int handle(int event) override;
 
-		void setButton(Fl_Menu_Button *button)
+		void setButton(ArgMenuButton *button)
 		{
 			this->button = button;
 		}
 
 	private:
-		Fl_Menu_Button *button;
+		ArgMenuButton *button;
 	};
 
 	static void optionCallback(Fl_Widget *widget, void *context);
@@ -81,7 +82,7 @@ private:
 	PanelFieldFixUp &fixUp;
 
 	Input *input;
-	Fl_Menu_Button *button;
+	ArgMenuButton *button;
 	std::vector<Fl_Menu_Item> buttonItems;
 
 	ArgType argType;

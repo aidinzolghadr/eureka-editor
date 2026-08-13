@@ -31,6 +31,7 @@
 
 #include "FL/Fl.H"
 #include "FL/fl_draw.H"
+#include "FL/Fl_Light_Button.H"
 #include "FL/Fl_Menu_Button.H"
 
 #include <set>
@@ -122,6 +123,16 @@ UI_ArgField::UI_ArgField(int X, int Y, int W, int H, PanelFieldFixUp &fixUp) : F
 	button = new ArgMenuButton(*this, X + W - DROP_DOWN_BUTTON_WIDTH, Y, DROP_DOWN_BUTTON_WIDTH, H);
 	button->hide();
 
+	toggleButton = new Fl_Light_Button(X + W - DROP_DOWN_BUTTON_WIDTH, Y, DROP_DOWN_BUTTON_WIDTH, H);
+	toggleButton->selection_color(FL_GREEN);
+	toggleButton->hide();
+	toggleButton->callback([](Fl_Widget *widget, void *userData)
+	{
+		auto field = static_cast<UI_ArgField *>(userData);
+		field->fixUp.setInputValue(field->input, SString((int)field->toggleButton->value()).c_str());
+		field->input->do_callback();
+	}, this);
+
 	end();
 
 	resizable(nullptr);
@@ -135,6 +146,7 @@ void UI_ArgField::resize(int X, int Y, int W, int H)
 	{
 		input->resize(X, Y, W - DROP_DOWN_BUTTON_WIDTH, H);
 		button->resize(X + W - DROP_DOWN_BUTTON_WIDTH, Y, DROP_DOWN_BUTTON_WIDTH, H);
+		toggleButton->resize(X + W - DROP_DOWN_BUTTON_WIDTH, Y, DROP_DOWN_BUTTON_WIDTH, H);
 	}
 	else
 		input->resize(X, Y, W, H);
@@ -142,6 +154,7 @@ void UI_ArgField::resize(int X, int Y, int W, int H)
 
 void UI_ArgField::updateOptions()
 {
+	toggleButton->hide();
 	if(argType.empty())
 	{
 		button->hide();
@@ -251,11 +264,10 @@ void UI_ArgField::setAsPolyobject(const Document &doc, const ConfigData &config)
 
 void UI_ArgField::setAsBoolean()
 {
-	argType.options = std::vector<ArgType::Entry>{
-		{ .number = 0, .name = "no" },
-		{ .number = 1, .name = "yes" },
-	};
-	updateOptions();
+	button->hide();
+	input->resize(x(), y(), w() - DROP_DOWN_BUTTON_WIDTH, h());
+	toggleButton->show();
+	toggleButton->resize(x() + w() - DROP_DOWN_BUTTON_WIDTH, y(), DROP_DOWN_BUTTON_WIDTH, h());
 }
 
 void UI_ArgField::setAsGeneric()
@@ -278,9 +290,10 @@ int UI_ArgField::value() const
 
 void UI_ArgField::updateFlags()
 {
-	if(argType.flags.empty())
-		return;
 	int val = value();
+	toggleButton->value(val == 1);
+	if(argType.flags.empty() && argType.options.empty())
+		return;
 	int valwithoutflag = val;
 	for(const ArgType::Entry &entry : argType.flags)
 	{

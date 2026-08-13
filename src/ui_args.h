@@ -33,6 +33,7 @@
 #include <vector>
 
 class ArgMenuButton;
+class Fl_Light_Button;
 class LineDef;
 class PanelFieldFixUp;
 struct ConfigData;
@@ -87,6 +88,7 @@ private:
 	Input *input;
 	ArgMenuButton *button;
 	std::vector<Fl_Menu_Item> buttonItems;
+	Fl_Light_Button *toggleButton;
 
 	ArgType argType;
 };

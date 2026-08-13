@@ -1170,7 +1170,7 @@ void Instance::StoreSelectedThing(int new_type)
 
 		for (sel_iter_c it(*edit.Selected) ; !it.done() ; it.next())
 		{
-			op.changeThing(*it, Thing::F_TYPE, new_type);
+			op.changeThing(*it, &Thing::type, new_type);
 		}
 	}
 

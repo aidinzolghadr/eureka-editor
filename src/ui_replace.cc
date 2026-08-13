@@ -1720,7 +1720,7 @@ void UI_FindAndReplace::Replace_Thing(EditOperation &op, int idx)
 {
 	int new_type = atoi(rep_value->value());
 
-	op.changeThing(idx, Thing::F_TYPE, new_type);
+	op.changeThing(idx, &Thing::type, new_type);
 }
 
 

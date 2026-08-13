@@ -277,7 +277,7 @@ void UI_ThingBox::type_callback(Fl_Widget *w, void *data)
 
 		for (sel_iter_c it(*box->inst.edit.Selected) ; !it.done() ; it.next())
 		{
-			op.changeThing(*it, Thing::F_TYPE, new_type);
+			op.changeThing(*it, &Thing::type, new_type);
 		}
 	}
 }
@@ -319,7 +319,7 @@ void UI_ThingBox::spec_callback(Fl_Widget *w, void *data)
 
 		for (sel_iter_c it(*box->inst.edit.Selected) ; !it.done() ; it.next())
 		{
-			op.changeThing(*it, Thing::F_SPECIAL, new_type);
+			op.changeThing(*it, &Thing::special, new_type);
 		}
 	}
 }
@@ -408,7 +408,7 @@ void UI_ThingBox::angle_callback(Fl_Widget *w, void *data)
 
 		for (sel_iter_c it(*box->inst.edit.Selected); !it.done(); it.next())
 		{
-			op.changeThing(*it, Thing::F_ANGLE, new_ang);
+			op.changeThing(*it, &Thing::angle, new_ang);
 		}
 	}
 }
@@ -426,7 +426,7 @@ void UI_ThingBox::flags_callback(Fl_Widget *w, void *data)
 
 		for (sel_iter_c it(*box->inst.edit.Selected); !it.done(); it.next())
 		{
-			op.changeThing(*it, Thing::F_OPTIONS, new_flags);
+			op.changeThing(*it, &Thing::options, new_flags);
 		}
 	}
 }
@@ -446,7 +446,7 @@ void UI_ThingBox::tid_callback(Fl_Widget *w, void *data)
 
 		for (sel_iter_c it(*box->inst.edit.Selected); !it.done(); it.next())
 		{
-			op.changeThing(*it, Thing::F_TID, new_tid);
+			op.changeThing(*it, &Thing::tid, new_tid);
 		}
 	}
 }
@@ -523,7 +523,7 @@ void UI_ThingBox::option_callback(Fl_Widget *w, void *data)
 
 			// only change the bits specified in 'mask'.
 			// this is important when multiple things are selected.
-			op.changeThing(*it, Thing::F_OPTIONS, (T->options & ~mask) | (new_opts & mask));
+			op.changeThing(*it, &Thing::options, (T->options & ~mask) | (new_opts & mask));
 		}
 	}
 }
@@ -570,6 +570,27 @@ void UI_ThingBox::argsCallback(int index, int value)
 	if(inst.loaded.levelFormat != MapFormat::udmf)
 		value = clamp(0, value, 255);
 
+	int Thing::*arg;
+	switch(index)
+	{
+		case 0:
+			arg = &Thing::arg1;
+			break;
+		case 1:
+			arg = &Thing::arg2;
+			break;
+		case 2:
+			arg = &Thing::arg3;
+			break;
+		case 3:
+			arg = &Thing::arg4;
+			break;
+		case 4:
+		default:
+			arg = &Thing::arg5;
+			break;
+	}
+
 	if (!inst.edit.Selected->empty())
 	{
 		EditOperation op(inst.level.basis);
@@ -577,8 +598,7 @@ void UI_ThingBox::argsCallback(int index, int value)
 
 		for (sel_iter_c it(*inst.edit.Selected); !it.done(); it.next())
 		{
-			op.changeThing(*it, static_cast<Thing::IntAddress>(Thing::F_ARG1 + index),
-                                              value);
+			op.changeThing(*it, arg, value);
 		}
 	}
 }

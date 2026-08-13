@@ -46,16 +46,6 @@ struct Thing
 	double xf = 0.0, yf = 0.0;
 	double hf = 0.0;
 
-	enum IntAddress
-	{
-		F_ANGLE,
-		F_TYPE,
-		F_OPTIONS,
-		F_TID,
-		F_SPECIAL,
-		F_ARG1, F_ARG2, F_ARG3, F_ARG4, F_ARG5,
-	};
-
 	inline double x() const
 	{
 		return xf;

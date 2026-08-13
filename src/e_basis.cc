@@ -389,18 +389,18 @@ bool Basis::change(ObjType type, int objnum, Field field, Value value)
 //
 // Change thing
 //
-bool Basis::changeThing(int thing, Thing::IntAddress field, int value)
-{
-	SYS_ASSERT(thing >= 0 && thing < doc.numThings());
-
-	if(field == Thing::F_TYPE)
-		inst.recent_things.insert_number(value);
-
-	return change(ObjType::things, thing, field, value);
-}
 bool Basis::changeThing(int thing, double Thing::*field, double value)
 {
 	SYS_ASSERT(thing >= 0 && thing < doc.numThings());
+
+	return change(ObjType::things, thing, field, value);
+}
+bool Basis::changeThing(int thing, int Thing::*field, int value)
+{
+	SYS_ASSERT(thing >= 0 && thing < doc.numThings());
+
+	if(field == &Thing::type)
+		inst.recent_things.insert_number(value);
 
 	return change(ObjType::things, thing, field, value);
 }
@@ -647,6 +647,17 @@ void Basis::EditUnit::rawChange(Basis &basis)
 				return; /* NOT REACHED */
 			}
 			std::swap(pos[field], std::get<int>(value));
+		},
+		[&basis, this](int Thing::*field) {
+			switch(objtype)
+			{
+			case ObjType::things:
+				std::swap(basis.doc.things[objnum].get()->*field, std::get<int>(value));
+				break;
+			default:
+				BugError("Basis::EditOperation::rawChange(thingDouble): bad objtype %u\n", (unsigned)objtype);
+				break;
+			}
 		},
 		[&basis, this](double Thing::*field) {
 			switch(objtype)

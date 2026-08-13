@@ -1035,18 +1035,18 @@ void ObjectsModule::transferThingProperties(EditOperation &op, int src_thing, in
 {
 	const auto T = doc.things[src_thing];
 
-	op.changeThing(dest_thing, Thing::F_TYPE,    T->type);
-	op.changeThing(dest_thing, Thing::F_OPTIONS, T->options);
-//	BA_ChangeTH(dest_thing, Thing::F_ANGLE,   T->angle);
+	op.changeThing(dest_thing, &Thing::type,    T->type);
+	op.changeThing(dest_thing, &Thing::options, T->options);
+//	BA_ChangeTH(dest_thing, &Thing::angle,   T->angle);
 
-	op.changeThing(dest_thing, Thing::F_TID,     T->tid);
-	op.changeThing(dest_thing, Thing::F_SPECIAL, T->special);
+	op.changeThing(dest_thing, &Thing::tid,     T->tid);
+	op.changeThing(dest_thing, &Thing::special, T->special);
 
-	op.changeThing(dest_thing, Thing::F_ARG1, T->arg1);
-	op.changeThing(dest_thing, Thing::F_ARG2, T->arg2);
-	op.changeThing(dest_thing, Thing::F_ARG3, T->arg3);
-	op.changeThing(dest_thing, Thing::F_ARG4, T->arg4);
-	op.changeThing(dest_thing, Thing::F_ARG5, T->arg5);
+	op.changeThing(dest_thing, &Thing::arg1, T->arg1);
+	op.changeThing(dest_thing, &Thing::arg2, T->arg2);
+	op.changeThing(dest_thing, &Thing::arg3, T->arg3);
+	op.changeThing(dest_thing, &Thing::arg4, T->arg4);
+	op.changeThing(dest_thing, &Thing::arg5, T->arg5);
 }
 
 
@@ -1652,16 +1652,16 @@ void ObjectsModule::doMirrorThings(EditOperation &op, const selection_c &list, b
 			op.changeThing(*it, &Thing::yf, my * 2 - T->yf);
 
 			if (T->angle != 0)
-				op.changeThing(*it, Thing::F_ANGLE, 360 - T->angle);
+				op.changeThing(*it, &Thing::angle, 360 - T->angle);
 		}
 		else
 		{
 			op.changeThing(*it, &Thing::xf, mx * 2 - T->xf);
 
 			if (T->angle > 180)
-				op.changeThing(*it, Thing::F_ANGLE, 540 - T->angle);
+				op.changeThing(*it, &Thing::angle, 540 - T->angle);
 			else
-				op.changeThing(*it, Thing::F_ANGLE, 180 - T->angle);
+				op.changeThing(*it, &Thing::angle, 180 - T->angle);
 		}
 	}
 }
@@ -1772,14 +1772,14 @@ void ObjectsModule::doRotate90Things(EditOperation &op, const selection_c &list,
 			op.changeThing(*it, &Thing::xf, mx - old_yf + my);
 			op.changeThing(*it, &Thing::yf, my + old_xf - mx);
 
-			op.changeThing(*it, Thing::F_ANGLE, calc_new_angle(T->angle, +90));
+			op.changeThing(*it, &Thing::angle, calc_new_angle(T->angle, +90));
 		}
 		else
 		{
 			op.changeThing(*it, &Thing::xf, mx + old_yf - my);
 			op.changeThing(*it, &Thing::yf, my - old_xf + mx);
 
-			op.changeThing(*it, Thing::F_ANGLE, calc_new_angle(T->angle, -90));
+			op.changeThing(*it, &Thing::angle, calc_new_angle(T->angle, -90));
 		}
 	}
 }
@@ -1876,7 +1876,7 @@ void ObjectsModule::doScaleTwoThings(EditOperation &op, const selection_c &list,
 
 		if (ang_diff)
 		{
-			op.changeThing(*it, Thing::F_ANGLE, calc_new_angle(T->angle, ang_diff));
+			op.changeThing(*it, &Thing::angle, calc_new_angle(T->angle, ang_diff));
 		}
 	}
 }

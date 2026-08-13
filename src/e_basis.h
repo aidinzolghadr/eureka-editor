@@ -82,6 +82,7 @@ using Field = std::variant<
 	int,
 	int      LineDef::*,
 	unsigned LineDef::*,
+	int      Thing::*,
 	double   Thing::*,
 	double   Vertex::*
 >;
@@ -324,7 +325,7 @@ private:
 	void setMessageForSelection(const char *verb, const selection_c &list, const char *suffix = "");
 	int addNew(ObjType type);
 	bool change(ObjType type, int objnum, Field field, Value value);
-	bool changeThing(int thing, Thing::IntAddress field, int value);
+	bool changeThing(int thing, int Thing::*field, int value);
 	bool changeThing(int thing, double Thing::*field, double value);
 	bool changeVertex(int vert, double Vertex::*field, double value);
 	bool changeSector(int sec, Sector::IntAddress field, int value);
@@ -385,7 +386,7 @@ public:
 		return basis.change(type, objnum, (int)field, value);
 	}
 
-	bool changeThing(int thing, Thing::IntAddress field, int value)
+	bool changeThing(int thing, int Thing::*field, int value)
 	{
 		return basis.changeThing(thing, field, value);
 	}

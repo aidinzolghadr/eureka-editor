@@ -1620,7 +1620,7 @@ void Things_FixDuds(Instance &inst)
 
 		if (new_options != T->options)
 		{
-			op.changeThing(n, Thing::F_OPTIONS, new_options);
+			op.changeThing(n, &Thing::options, new_options);
 		}
 	}
 }

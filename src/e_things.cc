@@ -73,7 +73,7 @@ void Instance::CMD_TH_SpinThings()
 		{
 			const auto T = level.things[*it];
 
-			op.changeThing(*it, Thing::F_ANGLE, calc_new_angle(T->angle, degrees));
+			op.changeThing(*it, &Thing::angle, calc_new_angle(T->angle, degrees));
 		}
 	}
 

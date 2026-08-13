@@ -216,6 +216,26 @@ void UI_ArgField::setAsTag(const Document &doc)
 	makeTagList(tags);
 }
 
+void UI_ArgField::setAsLineID(const Document &doc, const ConfigData &config)
+{
+	std::set<int> lineids;
+	for(int i = 0; i < doc.numLinedefs(); ++i)
+	{
+		const LineDef &line = *doc.linedefs[i];
+		SpecialTagInfo linfo;
+		int lineid = 0;
+		if(getSpecialTagInfo(ObjType::linedefs, i, line.type, &line, config, linfo) &&
+		   linfo.selflineid >= 1)
+		{
+			lineid = linfo.selflineid;
+		}
+		else if(line.lineid >= 1)
+			lineid = line.lineid;
+		lineids.insert(lineid);
+	}
+	makeTagList(lineids);
+}
+
 void UI_ArgField::setAsPolyobject(const Document &doc, const ConfigData &config)
 {
 	std::set<int> polyobjects;
@@ -479,6 +499,9 @@ void UI_ArgsBox::setLabel(int index, const SString &text, SpecialArgType type,
 	{
 		case SpecialArgType::tag:
 			input->setAsTag(doc);
+			break;
+		case SpecialArgType::line_id:
+			input->setAsLineID(doc, config);
 			break;
 		case SpecialArgType::po:
 			input->setAsPolyobject(doc, config);

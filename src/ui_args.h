@@ -50,6 +50,7 @@ public:
 	void setInputValue(const char *value);
 
 	void setAsTag(const Document &doc);
+	void setAsLineID(const Document &doc, const ConfigData &config);
 	void setAsPolyobject(const Document &doc, const ConfigData &config);
 	void setAsBoolean();
 	void setAsGeneric();

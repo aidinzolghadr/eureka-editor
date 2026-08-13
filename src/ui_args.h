@@ -53,6 +53,7 @@ public:
 	void setAsTag(const Document &doc);
 	void setAsLineID(const Document &doc, const ConfigData &config);
 	void setAsPolyobject(const Document &doc, const ConfigData &config);
+	void setAsTID(const Document &doc);
 	void setAsBoolean();
 	void setAsGeneric();
 	void setAsCustom(const ArgType &type);

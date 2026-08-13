@@ -262,6 +262,14 @@ void UI_ArgField::setAsPolyobject(const Document &doc, const ConfigData &config)
 	makeTagList(polyobjects);
 }
 
+void UI_ArgField::setAsTID(const Document &doc)
+{
+	std::set<int> tids;
+	for(const auto &thing : doc.things)
+		tids.insert(thing->tid);
+	makeTagList(tids);
+}
+
 void UI_ArgField::setAsBoolean()
 {
 	button->hide();
@@ -515,6 +523,9 @@ void UI_ArgsBox::setLabel(int index, const SString &text, SpecialArgType type,
 			break;
 		case SpecialArgType::line_id:
 			input->setAsLineID(doc, config);
+			break;
+		case SpecialArgType::tid:
+			input->setAsTID(doc);
 			break;
 		case SpecialArgType::po:
 			input->setAsPolyobject(doc, config);

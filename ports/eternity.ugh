@@ -451,8 +451,8 @@ argflag slope 2 back
 
 special 181 s "Plane_Align"                floor_side:slope  ceil_side:slope
 special 190 s "Sky transfer"                :tag  255  sky_flip?
-special 218 s "Sector_SetWind"             :tag  force  angle  flags:sector_wind
-special 220 s "Sector_SetCurrent"          :tag  force  angle  flags:sector_wind
+special 218 s "Sector_SetWind"             :tag  force :angle  flags:sector_wind
+special 220 s "Sector_SetCurrent"          :tag  force :angle  flags:sector_wind
 
 specialHandling 118 slopeCopyParameterized
 specialHandling 181 slopeParameterized

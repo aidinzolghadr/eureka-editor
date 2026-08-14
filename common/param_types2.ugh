@@ -2,6 +2,20 @@
 
 include param_types
 
+argtype tele_nofog 0 "Keep direction"
+argtype tele_nofog 1 "Set direction"
+argtype tele_nofog 2 "Relative (glitchy)"
+argtype tele_nofog 3 "Relative (fixed)"
+
+argtype degrees 0 east
+argtype degrees 45 northeast
+argtype degrees 90 north
+argtype degrees 135 northwest
+argtype degrees 180 west
+argtype degrees 225 southwest
+argtype degrees 270 south
+argtype degrees 315 southeast
+
 special   9 r "Line_Horizon"
 special  10 d "Door_Close"            :tag  :speed  light_tag:tag
 special  11 d "Door_Open"             :tag  :speed  light_tag:tag
@@ -26,7 +40,7 @@ special  63 g "Plat_DownByValue"             :tag  :speed  :delay  dist_x8
 special  64 g "Plat_UpWaitDownStay"          :tag  :speed  :delay
 special  65 g "Plat_UpByValue"               :tag  :speed  :delay  dist_x8
 special  71 u "Teleport_NoFog"         :tid  set_angle:tele_nofog  :tag keep_height?
-special  72 t "ThrustThing"             angle  thrust  unlimited? :tid
+special  72 t "ThrustThing"            :angle  thrust  unlimited? :tid
 special  73 t "DamageThing"             damage  death_type
 special  75 x "Teleport_EndGame"
 special  80 k "ACS_Execute"             script  map  param1  param2  param3
@@ -39,10 +53,10 @@ special  86 p "Polyobj_MoveToSpot"      :po  :speed  :tid
 special  87 p "Polyobj_Stop"            :po
 special  88 p "Polyobj_MoveTo"         :po  speed x y
 special  89 p "Polyobj_OR_MoveTo"      :po  speed x y
-special  90 p "Polyobj_OR_RotateLeft"   :po  :speed  angle
-special  91 p "Polyobj_OR_RotateRight"  :po  :speed  angle
-special  92 p "Polyobj_OR_Move"         :po  :speed  angle  dist
-special  93 p "Polyobj_OR_MoveTimes8"   :po  :speed  angle  dist_x8
+special  90 p "Polyobj_OR_RotateLeft"   :po  :speed :angle
+special  91 p "Polyobj_OR_RotateRight"  :po  :speed :angle
+special  92 p "Polyobj_OR_Move"         :po  :speed :angle  dist
+special  93 p "Polyobj_OR_MoveTimes8"   :po  :speed :angle  dist_x8
 special  95 e "FloorAndCeiling_LowerByValue" :tag  :speed  dist
 special  96 e "FloorAndCeiling_RaiseByValue" :tag  :speed  dist
 special  97 c "Ceiling_LowerAndCrushDist"    :tag  :speed  damage  gap  :crush_mode
@@ -64,16 +78,16 @@ special 130 t "Thing_Activate"          :tid
 special 131 t "Thing_Deactivate"        :tid
 special 132 t "Thing_Remove"            :tid
 special 133 t "Thing_Destroy"           :tid  extreme?  :tag
-special 134 t "Thing_Projectile"       :tid  type_id  angle  speed  up_speed
-special 135 t "Thing_Spawn"             :tid  type_id  angle  new_id
-special 136 t "Thing_ProjectileGravity" :tid  type_id  angle  speed  up_speed
-special 137 t "Thing_SpawnNoFog"        :tid  type_id  angle  new_id
+special 134 t "Thing_Projectile"       :tid  type_id  :angle  speed  up_speed
+special 135 t "Thing_Spawn"             :tid  type_id :angle  new_id
+special 136 t "Thing_ProjectileGravity" :tid  type_id :angle  speed  up_speed
+special 137 t "Thing_SpawnNoFog"        :tid  type_id :angle  new_id
 special 138 f "Floor_Waggle"               :tag  amp  speed  offset  time
 special 140 s "Sector_ChangeSound"         :tag  sound_seq
 special 168 c "Ceiling_CrushAndRaiseDist"    :tag  gap  :speed  damage  :crush_mode
 special 176 t "Thing_ChangeTID"         :tid  new_tid
 special 179 - "ChangeSkill"             skill
-special 185 s "Sector_SetRotation"         :tag  floor_angle  ceil_angle
+special 185 s "Sector_SetRotation"         :tag  floor_angle:degrees  ceil_angle:degrees
 special 186 s "Sector_SetCeilingPanning"   :tag  x_offset  x_frac  y_offset  y_frac
 special 187 s "Sector_SetFloorPanning"     :tag  x_offset  x_frac  y_offset  y_frac
 special 195 c "Ceiling_CrushRaiseAndStayA"   :tag  down_speed:speed  up_speed:speed  damage  :crush_mode

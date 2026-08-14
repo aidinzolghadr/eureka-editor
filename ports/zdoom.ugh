@@ -380,8 +380,8 @@ special 212 s "Sector_SetColor"            :tag  red  green  blue  desat
 special 213 s "Sector_SetFade"             :tag  red  green  blue
 special 214 s "Sector_SetDamage"           :tag  damage  death_type:mod interval leakiness
 special 216 s "Sector_SetGravity"          :tag  grav_mul  grav_mul_frac
-special 218 s "Sector_SetWind"             :tag  strength  angle  use_line_angle?
-special 220 s "Sector_SetCurrent"          :tag  strength  angle  use_line_angle?
+special 218 s "Sector_SetWind"             :tag  strength :angle  use_line_angle?
+special 220 s "Sector_SetCurrent"          :tag  strength :angle  use_line_angle?
 special 277 s "Sector_SetFloorGlow"        :tag height red green blue
 special 278 s "Sector_SetCeilingGlow"      :tag height red green blue
 

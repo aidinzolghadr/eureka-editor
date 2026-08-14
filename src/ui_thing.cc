@@ -817,7 +817,7 @@ void UI_ThingBox::UpdateGameInfo(const LoadingData &loaded, const ConfigData &co
 				Y += 22;
 			currow = flag->row;
 			int col = clamp(0, flag->column, 2);
-			FlagButton flagButton;
+			FlagButton flagButton = {};
 			flagButton.button = std::make_unique<Fl_Check_Button>(xpos[col], Y, FW, 22,
 																  flag->label.c_str());
 			flagButton.button->value(flag->defaultSet != thingflag_t::DefaultMode::off ? 1 : 0);

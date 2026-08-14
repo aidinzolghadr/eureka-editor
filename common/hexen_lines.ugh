@@ -35,28 +35,28 @@ lineflag "sound block" 0x0040
 
 # Floors and lifts
 
-special 20 f "Floor_Lower"          :tag! :speed  dist
-special 21 f "Floor_LowerToLowest"  :tag! :speed
-special 22 f "Floor_LowerToNearest" :tag! :speed
-special 23 f "Floor_RaiseByValue"   :tag! :speed  dist
-special 24 f "Floor_RaiseToHighest" :tag! :speed
-special 25 f "Floor_RaiseToNearest" :tag! :speed
-special 28 f "Floor_RaiseAndCrush"   :tag! :speed  damage
-special 35 f "Floor_RaiseByValueTimes8"       :tag! :speed  dist_x8
-special 36 f "Floor_LowerByValueTimes8"       :tag! :speed  dist_x8
-special 66 f "Floor_LowerInstant" :tag! -  dist
-special 67 f "Floor_RaiseInstant" :tag! -  dist
-special 68 f "Floor_MoveToValueTimes8"      :tag! :speed  height_x8  negate?
-special 46 f "Floor_CrushStop"      :tag!
+special 20 f "Floor_Lower"              :tag! :speed  dist
+special 21 f "Floor_LowerToLowest"      :tag! :speed
+special 22 f "Floor_LowerToNearest"     :tag! :speed
+special 23 f "Floor_RaiseByValue"       :tag! :speed  dist
+special 24 f "Floor_RaiseToHighest"     :tag! :speed
+special 25 f "Floor_RaiseToNearest"     :tag! :speed
+special 28 f "Floor_RaiseAndCrush"      :tag! :speed  damage
+special 35 f "Floor_RaiseByValueTimes8" :tag! :speed  dist_x8
+special 36 f "Floor_LowerByValueTimes8" :tag! :speed  dist_x8
+special 66 f "Floor_LowerInstant"       :tag! -  dist
+special 67 f "Floor_RaiseInstant"       :tag! -  dist
+special 68 f "Floor_MoveToValueTimes8"  :tag! :speed  height_x8  negate?
+special 46 f "Floor_CrushStop"          :tag!
 
 special 138 f "Floor_Waggle"        :tag! amp  speed  offset  time
 
 special 62 g "Plat_DownWaitUpStay"  :tag! :speed  :delay
-special 63 g "Plat_DownByValue"        :tag! :speed  :delay  dist
+special 63 g "Plat_DownByValue"     :tag! :speed  :delay  dist
 special 64 g "Plat_UpWaitDownStay"  :tag! :speed  :delay
-special 65 g "Plat_UpByValue"          :tag! :speed  :delay  dist
-special 60 g "Plat_PerpetualRaise"   :tag! :speed  :delay
-special 61 g "Plat_Stop"        :tag!
+special 65 g "Plat_UpByValue"       :tag! :speed  :delay  dist
+special 60 g "Plat_PerpetualRaise"  :tag! :speed  :delay
+special 61 g "Plat_Stop"            :tag!
 
 special 26 q "Stairs_BuildDown"        :tag! :speed  dist:stepsize  delay  reset:delay
 special 27 q "Stairs_BuildUp"          :tag! :speed  dist:stepsize  delay  reset:delay
@@ -93,24 +93,24 @@ special 109 l "Force_Lightning"  mode:lightning
 
 # Thing specials
 
-special 72 t "ThrustThing"    angle  dist
+special 72 t "ThrustThing"  :angle  dist
 special 73 t "DamageThing"  damage
 
 special 130 t "Thing_Activate"      :tid!
 special 131 t "Thing_Deactivate"    :tid!
 special 132 t "Thing_Remove"        :tid!
 special 133 t "Thing_Destroy"       :tid!
-special 134 t "Thing_Projectile"        :tid! type  angle  :speed  vspeed
-special 136 t "Thing_ProjectileGravity"  :tid! type  angle  :speed  vspeed
-special 135 t "Thing_Spawn"         :tid! type  angle
-special 137 t "Thing_SpawnNoFog" :tid! type  angle
+special 134 t "Thing_Projectile"        :tid! type  :angle  :speed  vspeed
+special 136 t "Thing_ProjectileGravity"  :tid! type  :angle  :speed  vspeed
+special 135 t "Thing_Spawn"         :tid! type  :angle
+special 137 t "Thing_SpawnNoFog" :tid! type  :angle
 
 # Polyobj specials
 
-special 90 p "Polyobj_OR_RotateLeft"  :po  :speed  angle
-special 91 p "Polyobj_OR_RotateRight"  :po  :speed  angle
-special 92 p "Polyobj_OR_Move"     :po  :speed  angle  dist
-special 93 p "Polyobj_OR_MoveTimes8"  :po  :speed  angle  dist
+special 90 p "Polyobj_OR_RotateLeft"  :po  :speed  :angle
+special 91 p "Polyobj_OR_RotateRight"  :po  :speed  :angle
+special 92 p "Polyobj_OR_Move"     :po  :speed  :angle  dist
+special 93 p "Polyobj_OR_MoveTimes8"  :po  :speed  :angle  dist
 
 # Miscellaneous
 

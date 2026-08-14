@@ -226,6 +226,7 @@ UI_ThingBox::UI_ThingBox(Instance &inst, int X, int Y, int W, int H, const char 
 
 
 	// Hexen thing specials
+	specialGroup = new Fl_Group(which->x(), Y, which->w(), 3 * TYPE_INPUT_HEIGHT + 4);
 
 	spec_type = new UI_DynInput(X+74, Y, 64, TYPE_INPUT_HEIGHT, "Special: ");
 	spec_type->align(FL_ALIGN_LEFT);
@@ -233,22 +234,21 @@ UI_ThingBox::UI_ThingBox(Instance &inst, int X, int Y, int W, int H, const char 
 	spec_type->callback2(dynspec_callback, this);
 	spec_type->when(FL_WHEN_RELEASE | FL_WHEN_ENTER_KEY);
 	spec_type->type(FL_INT_INPUT);
-	spec_type->hide();
 
 	spec_choose = new Fl_Button(X+W/2+24, Y, 80, TYPE_INPUT_HEIGHT, "Choose");
 	spec_choose->callback(button_callback, this);
-	spec_choose->hide();
 
 	Y = Y + spec_type->h() + 2;
 
 	spec_desc = new Fl_Output(X+74, Y, W-86, TYPE_INPUT_HEIGHT, "Desc: ");
 	spec_desc->align(FL_ALIGN_LEFT);
-	spec_desc->hide();
 
 	Y = Y + spec_desc->h() + 2;
 
 	argsBox = new UI_ArgsBox(which->x(), Y, mFixUp, inst.level);
 	argsBox->setCallbackFunction(std::bind_front(&UI_ThingBox::argsCallback, this));
+
+	specialGroup->end();
 
 	mFixUp.loadFields({type, angle, flagBox, tid, exfloor, pos_x, pos_y, pos_z, spec_type});
 	argsBox->loadToFixUp();
@@ -834,12 +834,7 @@ void UI_ThingBox::UpdateGameInfo(const LoadingData &loaded, const ConfigData &co
 //	exfloor->Fl_Widget::position(exfloor->x(), Y);
 //	efl_down->y(Y + 1);
 //	efl_up->y(Y + 1);
-	spec_type->Fl_Widget::position(spec_type->x(), Y);
-	spec_choose->Fl_Widget::position(spec_choose->x(), Y);
-	Y += spec_type->h() + 2;
-	spec_desc->Fl_Widget::position(spec_desc->x(), Y);
-	Y += spec_desc->h() + 2;
-	argsBox->position(argsBox->x(), Y);
+	specialGroup->position(specialGroup->x(), Y);
 
 	/* map format stuff */
 
@@ -849,10 +844,7 @@ void UI_ThingBox::UpdateGameInfo(const LoadingData &loaded, const ConfigData &co
 
 		tid->show();
 
-		spec_type  ->show();
-		spec_choose->show();
-		spec_desc  ->show();
-		argsBox->show();
+		specialGroup->show();
 
 		if(loaded.levelFormat == MapFormat::udmf)
 		{
@@ -873,11 +865,7 @@ void UI_ThingBox::UpdateGameInfo(const LoadingData &loaded, const ConfigData &co
 
 		tid->hide();
 
-		spec_type  ->hide();
-		spec_choose->hide();
-		spec_desc  ->hide();
-
-		argsBox->hide();
+		specialGroup->hide();
 
 		pos_x->type(FL_INT_INPUT);
 		pos_y->type(FL_INT_INPUT);

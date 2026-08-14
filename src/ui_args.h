@@ -30,6 +30,7 @@
 #include "FL/Fl_Menu_Button.H"
 
 #include <functional>
+#include <set>
 #include <vector>
 
 class ArgMenuButton;

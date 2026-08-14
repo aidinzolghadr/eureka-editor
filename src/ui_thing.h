@@ -81,6 +81,7 @@ private:
 	UI_Pic *sprite;
 
 	// more Hexen stuff
+	Fl_Group *specialGroup;
 	UI_DynInput  *spec_type;
 	Fl_Button    *spec_choose;
 	Fl_Output    *spec_desc;
